@@ -29,7 +29,7 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (DuplicateProductException e) {
             logger.error("[CONTROLLER] - Erro ao criar produto: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -37,7 +37,7 @@ public class ProductController {
     public ResponseEntity<Void> updateProduct(@PathVariable Integer sku, @RequestBody Product updatedProduct) {
         try {
             productService.updateProduct(sku, updatedProduct);
-            logger.info("[CONTROLLER] - Produto atualizado com sucesso");
+            logger.info("[CONTROLLER] - Produto {} atualizado com sucesso", sku);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             logger.error("[CONTROLLER] - Erro ao atualizar produto: {}", e.getMessage());
@@ -49,7 +49,7 @@ public class ProductController {
     public ResponseEntity<Product> getProductBySku(@PathVariable Integer sku) {
         try {
             Product product = productService.getProductBySku(sku);
-            logger.info("[CONTROLLER] - Produto encontrado com sucesso {}", product.getSku());
+            logger.info("[CONTROLLER] - Produto {} encontrado com sucesso ", product.getSku());
             return ResponseEntity.ok(product);
         } catch (Exception e) {
             logger.error("[CONTROLLER] - Erro ao buscar produto: {}", e.getMessage());
@@ -61,11 +61,11 @@ public class ProductController {
     public ResponseEntity<Void> deleteProductBySku(@PathVariable Integer sku) {
         try {
             productService.deleteProductBySku(sku);
-            logger.info("[CONTROLLER] - Produto deletado com sucesso");
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            logger.info("[CONTROLLER] - Produto {} deletado com sucesso", sku);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             logger.error("[CONTROLER] - Erro ao deletar produto: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
 }

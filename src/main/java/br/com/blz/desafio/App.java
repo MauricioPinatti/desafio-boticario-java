@@ -11,7 +11,7 @@ public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
-        logger.info("[APP] - Iniciada");
         SpringApplication.run(App.class, args);
+        logger.info("[APP] - Iniciada");
     }
 }

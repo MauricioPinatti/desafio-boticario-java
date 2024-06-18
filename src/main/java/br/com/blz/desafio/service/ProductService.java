@@ -52,7 +52,7 @@ public class ProductService {
         }
     }
 
-    private void calculaInventoryQuantity(Product product) {
+    public void calculaInventoryQuantity(Product product) {
         Inventory inventory = product.getInventory();
         List<Warehouse> warehouses = inventory.getWarehouses();
         int totalQuantity = 0;
@@ -63,13 +63,13 @@ public class ProductService {
         inventory.setQuantity(totalQuantity);
     }
 
-    private void calculaIsMarketable(Product product) {
+    public void calculaIsMarketable(Product product) {
         Inventory inventory = product.getInventory();
         int totalQuantity = inventory.getQuantity();
         product.setMarketable(totalQuantity > 0);
     }
 
-    private boolean verificaDuplicidade(Product product) {
+    public boolean verificaDuplicidade(Product product) {
         Optional<Product> existingProduct = productRepository.findById(product.getSku());
         if (existingProduct.isPresent()) {
             throw new DuplicateProductException("Product com ID " + product.getSku() + " já existe.");
